@@ -14,3 +14,5 @@ It works even if you connect multiple devices.(Please let me know if it does not
 3. Enable the Developer options and enable USB debugging
 
 then you only need to run this code.
+
+* Please reboot and wait 1 mins if it does not move files as the device may store cache and would not show them properly moved.
