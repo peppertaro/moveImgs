@@ -39,7 +39,7 @@ $YYYYMM = (Get-Date -UFormat '+%Y%m');
                         }
                     }
                 }
-            if($CameraDir -notmatch $null){
+            if($CameraDir -ne $null){
                 $MvToDir="$sdDir/DCIM/$CameraDir";
                 ##prepare to move
                     $ListToMvcmd="$adbsh ls -al '$MvToDir/*.{jpg,jpeg,png,gif,mp4,m4a,mov,mpeg} 2>/dev/null'";
@@ -58,11 +58,15 @@ $YYYYMM = (Get-Date -UFormat '+%Y%m');
                 ##Make date / name variables and move if it matches the date
                     $fileCount=0;
                     for($i=0; $i -lt $ListToMv.length; $i++){
-                        $tmp=$ListToMv[$i].split(' ');
-                        $date[$i]=$tmp[$tmp.length-3];
-                        $name[$i]=$tmp[$tmp.length-1];
-                        if($date[$i] -match $dateKey){
-                            $filename=$name[$i]
+                        $data=$ListToMv[$i].split(' ');
+                        $date[$i]=$data[$data.length-3];
+                        $name[$i]=$data[$data.length-1];
+                         if($name[$i] -match '/'){
+                                $filename=$name[$i].split('/');
+                                $name[$i]=$filename[$name.length-1];
+                            }
+                        if($date[$i] -match $dateKey){                            
+                            $filename=$name[$i]                           
                             $MvToDircmd="$adbsh mv '$MvToDir/$filename $MvToDir/$YYYYMM/ 2>/dev/null'";
                             Invoke-Expression $MvToDircmd;
                             $fileCount++;
