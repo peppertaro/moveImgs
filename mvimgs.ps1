@@ -27,6 +27,7 @@ $YYYYMM = (Get-Date -UFormat '+%Y%m');
                 ##rm blank lines
                 $DirCh= $DirCh.trim() -ne "";
                 $FileAm=0;
+                $CameraDir="";
                 ## Check and set $CameraDir when it contains maximum imgs/videos
                 foreach($Dir in $DirCh){
                     $FileDir="$DirToDecidecmd'$Dir/*.{jpg,jpeg,png,gif,mp4,m4a,mov,mpeg} 2>/dev/null'";
@@ -39,7 +40,7 @@ $YYYYMM = (Get-Date -UFormat '+%Y%m');
                         }
                     }
                 }
-            if($CameraDir -ne $null){
+            if($CameraDir -ne ""){
                 $MvToDir="$sdDir/DCIM/$CameraDir";
                 ##prepare to move
                     $ListToMvcmd="$adbsh ls -al '$MvToDir/*.{jpg,jpeg,png,gif,mp4,m4a,mov,mpeg} 2>/dev/null'";
@@ -49,7 +50,7 @@ $YYYYMM = (Get-Date -UFormat '+%Y%m');
                 ##get date with format YYYY-MM
                     $dateKey=(Get-Date -UFormat '+%Y-%m');
                 ## Create file directory if it does not exist 
-                    $mkfiledir = "$adbsh mkdir -p $filedir";
+                    $mkfiledir = "$adbsh mkdir -p $MvToDir/$YYYYMM";
                     Invoke-Expression $mkfiledir;
                 ##Set blank Arrays to store
                     $line=New-Object System.String[] $ListToMv.count;
@@ -62,10 +63,10 @@ $YYYYMM = (Get-Date -UFormat '+%Y%m');
                         $date[$i]=$data[$data.length-3];
                         $name[$i]=$data[$data.length-1];
                          if($name[$i] -match '/'){
-                                $filename=$name[$i].split('/');
-                                $name[$i]=$filename[$name.length-1];
+                                $splnm=$name[$i].split('/');
+                                $name[$i]=$splnm[$splnm.length-1];
                             }
-                        if($date[$i] -match $dateKey){                            
+                        if($date[$i] -match $dateKey){
                             $filename=$name[$i]                           
                             $MvToDircmd="$adbsh mv '$MvToDir/$filename $MvToDir/$YYYYMM/ 2>/dev/null'";
                             Invoke-Expression $MvToDircmd;
