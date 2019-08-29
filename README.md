@@ -1,5 +1,5 @@
-# MoveImgs/Videos
-This script is to create month(YYYYMM) directly and move images / videos into it if they match the condition.
+# MoveImages/Videos
+This script is to create month(YYYYMM) directory and move images / videos into it if they match the condition.
 Please be noted that this is NOT for iOS Devices / WindowsPhone (Client).
 This script is based on Powershell, so it does NOT work for Macbook (to run the code) either.
 
